@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title><b>Informações dos usuários</b></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list lines="full">
+        <ion-item>
+          <ion-input required type="text" placeholder="Nome" [(ngModel)]="user.nome"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input required type="text" placeholder="Sobrenome" [(ngModel)]="user.sobrenome"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input required type="text" placeholder="telefone" [(ngModel)]="user.telefone"></ion-input>  
+        </ion-item>
+        <ion-item>
+          <ion-input required type="email" placeholder="email" [(ngModel)]="user.email"></ion-input>
+        </ion-item>
+    </ion-list>
+  <ion-button color="success" expand="full" (click)="saveTodo()">Save</ion-button>
+</ion-content>

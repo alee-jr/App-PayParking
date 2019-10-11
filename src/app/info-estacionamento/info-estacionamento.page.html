@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title><b>Informações do Estacionamento</b></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list lines="full">
+        <ion-item>
+          <ion-input required type="text" placeholder="Email" [(ngModel)]="park.email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input required type="text" placeholder="Endereço" [(ngModel)]="park.endereco"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input required type="text" placeholder="Nome" [(ngModel)]="park.nome"></ion-input>  
+        </ion-item>
+        <ion-item>
+          <ion-input required type="text" placeholder="Razão Social" [(ngModel)]="park.razao"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input required type="number" placeholder="Cnpj" [(ngModel)]="park.cnpj"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input required type="text" placeholder="Nome do Responsável" [(ngModel)]="park.responsavel"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input required type="text" placeholder="Rg" [(ngModel)]="park.rg"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input required type="number" placeholder="Número de vagas" [(ngModel)]="park.vagas"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input required type="number" placeholder="Preço da hora" [(ngModel)]="park.preco"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input required type="password" placeholder="Senha" [(ngModel)]="park.senha"></ion-input>
+        </ion-item>
+    </ion-list>
+  <ion-button color="success" expand="full" (click)="saveTodo()">Save</ion-button>
+</ion-content>

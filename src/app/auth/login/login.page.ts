@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { CrudService } from 'src/app/service/crud.service';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,15 +9,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-
-  constructor(private  authService:  AuthService, private  router:  Router) { }
+  userEmail;
+  userSenha;
+  constructor(private crudService: CrudService, private router: Router) { }
 
   ngOnInit() {
+    
   }
 
-  login(form){
-    this.authService.login(form.value).subscribe((res)=>{
-      this.router.navigateByUrl('home');
-    });
-  }
+  
+  
+  
 }
