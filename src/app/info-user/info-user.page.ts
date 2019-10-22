@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudService, Users } from '../service/crud.service';
+import { CrudService} from '../service/crud.service';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, LoadingController } from '@ionic/angular';
+import { User } from '../user';
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-info-user',
@@ -10,19 +12,19 @@ import { NavController, LoadingController } from '@ionic/angular';
 })
 export class InfoUserPage implements OnInit {
 
-  user: Users = {
-    nome: 'test',
-    sobrenome: 'lala',
-    telefone: 23424,
-    email: 'dasad',
-    rg: '123231',
-    senha: 'sdads',
+  user: User = {
+    nome: '',
+    sobrenome: '',
+    telefone: null,
+    email: '',
+    rg: '',
+    senha: '',
   };
   
   todoId = null;
-  
- 
-  constructor(private route: ActivatedRoute, private nav: NavController, private crud: CrudService, private loadingController: LoadingController) { }
+  constructor(private afs: AngularFirestore, private route: ActivatedRoute, private nav: NavController,
+     private crud: CrudService, private loadingController: LoadingController) { 
+     }
  
   ngOnInit() {
     this.todoId = this.route.snapshot.params['id'];
@@ -33,7 +35,7 @@ export class InfoUserPage implements OnInit {
  
   async loadTodo() {
     const loading = await this.loadingController.create({
-      message: 'Loading Todo..'
+      message: 'Loading Info..'
     });
     await loading.present();
  
@@ -46,17 +48,12 @@ export class InfoUserPage implements OnInit {
   async saveTodo() {
  
     const loading = await this.loadingController.create({
-      message: 'Saving Todo..'
+      message: 'Saving Info..'
     });
     await loading.present();
  
     if (this.todoId) {
       this.crud.updateTodo(this.user, this.todoId).then(() => {
-        loading.dismiss();
-        this.nav.navigateBack('home');
-      });
-    } else {
-      this.crud.addTodo(this.user).then(() => {
         loading.dismiss();
         this.nav.navigateBack('home');
       });

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudService, Park } from '../service/crud.service';
+import { CrudService} from '../service/crud.service';
+import { Park } from '../park';
 
 @Component({
   selector: 'app-listar-estacionamento',

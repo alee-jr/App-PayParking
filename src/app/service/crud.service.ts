@@ -2,44 +2,23 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { User } from '../user';
+import { Park } from '../park';
 
-export interface Users{
-  id?: string;
-  nome: string;
-  sobrenome: string;
-  telefone: number;
-  email: string;
-  rg: string;
-  senha: string;
-}
-
-export interface Park{
-  id?: string;
-  email: string;
-  endereco: string;
-  nome: string;
-  razao: string;
-  cnpj: number;
-  responsavel: string;
-  rg: string;
-  vagas: number;
-  preco: number;
-  senha: string;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrudService {
-  private usersCollection: AngularFirestoreCollection<Users>;
-  private users: Observable<Users[]>;
+  private usersCollection: AngularFirestoreCollection<User>;
+  private users: Observable<User[]>;
 
   private parkCollection: AngularFirestoreCollection<Park>;
   private parks: Observable<Park[]>;
 
   constructor(private firestore: AngularFirestore) { 
-    this.usersCollection = firestore.collection<Users>('usuarios');
- 
+    this.usersCollection = firestore.collection<User>('usuarios');
+    
     this.users = this.usersCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
@@ -49,7 +28,6 @@ export class CrudService {
         });
       })
     );
-
 
     this.parkCollection = firestore.collection<Park>('estacionamentos');
     this.parks = this.parkCollection.snapshotChanges().pipe(
@@ -70,14 +48,14 @@ export class CrudService {
   }
  
   getUser(id) {
-    return this.usersCollection.doc<Users>(id).valueChanges();
+    return this.usersCollection.doc<User>(id).valueChanges();
   }
 
-  updateTodo(user: Users, id: string) {
+  updateTodo(user: User, id: string) {
     return this.usersCollection.doc(id).update(user);
   }
  
-  addTodo(user: Users) {
+  addTodo(user: User) {
     return this.usersCollection.add(user);
   }
  
@@ -93,6 +71,10 @@ export class CrudService {
  
   getParks(id) {
     return this.parkCollection.doc<Park>(id).valueChanges();
+  }
+
+  read(){
+    return this.firestore.collection('estacionamentos').snapshotChanges();
   }
 
   updatePark(park: Park, id: string) {

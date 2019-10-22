@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CrudService, Users, Park } from 'src/app/service/crud.service';
+import { CrudService } from 'src/app/service/crud.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { User } from 'src/app/user';
+import { AuthenticationService } from 'src/app/service/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -9,17 +11,19 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-  user: Users;
-  public userForm: FormGroup;    
+  user: User;
+  public userForm: FormGroup;   
+  errorMessage: string = '';
+  successMessage: string = ''; 
   
-  constructor(private crud: CrudService, private router: Router) {
+  constructor(private crud: CrudService, private router: Router, private auth: AuthenticationService) {
     this.userForm = new FormGroup({
       nome: new FormControl('', Validators.required),
       sobrenome: new FormControl('', Validators.required),
       telefone: new FormControl(''),
       email: new FormControl('', Validators.required),
       rg: new FormControl('', Validators.required),
-      senha: new FormControl('', Validators.required)
+      password: new FormControl('', Validators.required)
     });
    }
 
@@ -27,19 +31,19 @@ export class RegisterPage implements OnInit {
     
   }
 
-  cadastrar(){
-    if(this.userForm.valid){
-      this.user = (
-        this.userForm.controls['nome'].value,
-          this.userForm.controls['sobrenome'].value,
-          this.userForm.controls['telefone'].value,
-          this.userForm.controls['email'].value,
-          this.userForm.controls['rg'].value,
-          this.userForm.controls['senha'].value
-      )
-      this.crud.addTodo(this.user);
+  cadastrar(value){
+      this.auth.registerUser(value.email, value.password).then(res => {
+        console.log(res);
+        this.errorMessage = "";
+        this.successMessage = "Your account has been created. Please log in.";
+      }, err => {
+        console.log(err);
+        this.errorMessage = err.message;
+        this.successMessage = "";
+      });
+      this.crud.addTodo(value);
       this.router.navigateByUrl('home');
-    }
+    
   
    
   }

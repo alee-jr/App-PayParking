@@ -7,7 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SQLite } from '@ionic-native/sqlite/ngx';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
@@ -16,6 +16,8 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AuthenticationService } from './service/authentication.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,13 +27,16 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
       BrowserAnimationsModule,
       AngularFireModule.initializeApp(environment.firebase),
       AngularFirestoreModule,
-      AngularFireDatabaseModule],
+      AngularFireDatabaseModule,
+      FormsModule,
+      AngularFireAuthModule],
   providers: [
     StatusBar,
     SplashScreen,
     Geolocation,
     SQLite,
     HttpClientModule,
+    AuthenticationService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

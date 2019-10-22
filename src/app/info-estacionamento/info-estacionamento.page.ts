@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, LoadingController } from '@ionic/angular';
-import { CrudService, Park } from '../service/crud.service';
+import { CrudService} from '../service/crud.service';
+import { Park } from '../park';
 
 @Component({
   selector: 'app-info-estacionamento',
@@ -12,15 +13,15 @@ export class InfoEstacionamentoPage implements OnInit {
 
   park: Park = {
     email: '',
-    endereco: 'rararr',
-    nome: 'test',
-    razao: 'lala',
-    cnpj: 23424,
-    responsavel: 'dasad',
-    rg: '123231',
-    vagas: 10,
-    preco: 10,
-    senha: 'asd'
+    endereco: '',
+    nome: '',
+    razao: '',
+    cnpj: null,
+    responsavel: '',
+    rg: '',
+    vagas: null,
+    preco: null,
+    senha: ''
   };
   
   todoId = null;
@@ -37,7 +38,7 @@ export class InfoEstacionamentoPage implements OnInit {
  
   async loadTodo() {
     const loading = await this.loadingController.create({
-      message: 'Loading Todo..'
+      message: 'Loading Info..'
     });
     await loading.present();
  
@@ -57,12 +58,7 @@ export class InfoEstacionamentoPage implements OnInit {
     if (this.todoId) {
       this.crud.updatePark(this.park, this.todoId).then(() => {
         loading.dismiss();
-        this.nav.navigateBack('home');
-      });
-    } else {
-      this.crud.addPark(this.park).then(() => {
-        loading.dismiss();
-        this.nav.navigateBack('home');
+        this.nav.navigateBack('gerenciamento');
       });
     }
   }
