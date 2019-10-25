@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="success">
+    <ion-title><b>Reserva</b></ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <div *ngFor="let park of parks">
+    <div style="padding-left: 25%" *ngIf="park.endereco == endereco">
+      <h3>{{ park.endereco }}</h3>
+    </div>
+  </div>
+  <form [formGroup]="reservaForm" (ngSubmit)="reservar(reservaForm.value)">
+    <ion-list>
+      <ion-item>
+        <ion-label>Data</ion-label>
+        <ion-datetime formControlName="data" value="2019-10-25" placeholder="Select Date"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Horário</ion-label>
+        <ion-datetime formControlName="horario" display-format="h:mm A" picker-format="h:mm A" value="2019-10-25T07:43Z"></ion-datetime>
+      </ion-item>
+    </ion-list>
+    <ion-input formControlName="userId" type="hidden"></ion-input>
+    <ion-input formControlName="parkId"  type="hidden"></ion-input>
+    <ion-button [disabled]="!reservaForm.valid" type="submit" size="large" color="success" expand="block" class="fixar">Reservar
+    </ion-button>
+  </form>
+</ion-content>

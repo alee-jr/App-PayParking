@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterContentInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterContentInit, ViewChild, NgZone } from '@angular/core';
 import { Park } from '../park';
 import { CrudService } from '../service/crud.service';
+import { Router } from '@angular/router';
 declare var google;
 let infowindow: any;
 let options = {
@@ -19,9 +20,15 @@ const directionsDisplay = new google.maps.DirectionsRenderer;
 export class HomePage implements OnInit, AfterContentInit {
   map;
   parks: Park[];
+  cord;
 
   @ViewChild('mapElement', { static: true }) mapElement
-  constructor(private crud: CrudService) { }
+  constructor(private crud: CrudService, private router: Router, private ngZone: NgZone) {
+    (<any>window).ionicPageRef = {
+      zone: this.ngZone,
+      component: this
+    };
+   }
 
 
 
@@ -65,7 +72,7 @@ export class HomePage implements OnInit, AfterContentInit {
 
   }
 
-  createMarker(place) {
+ createMarker(place) {
     for (var i = 0; i < this.parks.length; i++) {
       if (place.name == this.parks[i].nome) {
         var placeLoc = place.geometry.location;
@@ -98,9 +105,18 @@ export class HomePage implements OnInit, AfterContentInit {
         }
 
       });
+      this.cord = place.vicinity;
       infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
-        place.vicinity + '<br>' + place.rating + '</div>');
+        place.vicinity + '<br>' + place.rating + '<br>' +
+        '<ion-button color="success" onClick="window.ionicPageRef.zone.run(() => { window.ionicPageRef.component.goToReserva(\'' + this.cord + '\') })" size="small">Reservar vaga</ion-button>'+'</div>');
       infowindow.open(this.map, this);
+
     });
+  }
+
+  goToReserva(place){
+    
+    this.router.navigate(['/reserva', place]);
+    
   }
 }

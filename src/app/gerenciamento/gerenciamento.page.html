@@ -6,7 +6,15 @@
     <ion-title><b>Gerenciamento de vagas</b></ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <div *ngFor="let reserva of reservas">
+    <div *ngFor="let user of users">
+      <div *ngFor="let park of parks">
+        <ion-item *ngIf="reserva.userId == user.email && reserva.parkId == park.endereco">
+          <h3>Nome: {{ user.nome }}     -      Placa: {{ user.placa }}       -       
+            Horario: {{ reserva.horario }}       -        Dia: {{ reserva.data }}</h3>
+        </ion-item>
+      </div>
+    </div>
+  </div>
 </ion-content>

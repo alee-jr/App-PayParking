@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../user';
 import { Park } from '../park';
+import { Reserva } from '../reserva';
 
 
 @Injectable({
@@ -15,6 +16,9 @@ export class CrudService {
 
   private parkCollection: AngularFirestoreCollection<Park>;
   private parks: Observable<Park[]>;
+
+  private reservaCollection: AngularFirestoreCollection<Reserva>;
+  private reservas: Observable<Reserva[]>;
 
   constructor(private firestore: AngularFirestore) { 
     this.usersCollection = firestore.collection<User>('usuarios');
@@ -31,6 +35,17 @@ export class CrudService {
 
     this.parkCollection = firestore.collection<Park>('estacionamentos');
     this.parks = this.parkCollection.snapshotChanges().pipe(
+      map(actions => {
+        return actions.map(a => {
+          const data = a.payload.doc.data();
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        });
+      })
+    );
+
+    this.reservaCollection = firestore.collection<Reserva>('reservas');
+    this.reservas = this.reservaCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
@@ -87,5 +102,14 @@ export class CrudService {
  
   removePark(id) {
     return this.parkCollection.doc(id).delete();
+  }
+
+  //reserva
+  
+  getReserva(){
+    return this.reservas;
+  }
+  addReserva(reserva: Reserva) {
+    return this.reservaCollection.add(reserva);
   }
 }

@@ -23,7 +23,11 @@ export class RegisterPage implements OnInit {
       telefone: new FormControl(''),
       email: new FormControl('', Validators.required),
       rg: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+      password: new FormControl('', Validators.required),
+      placa: new FormControl('', Validators.required),
+      nCartao: new FormControl('', Validators.required),
+      nomeCartao: new FormControl('', Validators.required),
+      cvv: new FormControl('', Validators.required),
     });
    }
 

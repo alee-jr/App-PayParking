@@ -27,6 +27,20 @@
             <ion-item>
               <ion-input required type="password" placeholder="senha" [(ngModel)]="user.senha"></ion-input>
             </ion-item>
+            <h3>Carro</h3>
+            <ion-item>
+              <ion-input required type="text" placeholder="placa" [(ngModel)]="user.placa"></ion-input>
+            </ion-item>
+            <h3>Cartão</h3>
+            <ion-item>
+              <ion-input required type="number" placeholder="Número do cartão" [(ngModel)]="user.nCartao"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input required type="text" placeholder="Nome cartão" [(ngModel)]="user.nomeCartao"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input required type="number" placeholder="CVV" [(ngModel)]="user.cvv"></ion-input>
+            </ion-item>
           </ion-list>
           <ion-button color="success" expand="full" (click)="saveTodo()">Save</ion-button>
         </div>

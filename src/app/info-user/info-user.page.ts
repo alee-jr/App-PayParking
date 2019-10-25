@@ -19,10 +19,14 @@ export class InfoUserPage implements OnInit {
     email: '',
     rg: '',
     senha: '',
+    placa: '',
+    nCartao: null,
+    nomeCartao: '',
+    cvv: null
   };
   
   todoId = null;
-  constructor(private afs: AngularFirestore, private route: ActivatedRoute, private nav: NavController,
+  constructor(private route: ActivatedRoute, private nav: NavController,
      private crud: CrudService, private loadingController: LoadingController) { 
      }
  
